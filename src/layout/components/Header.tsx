@@ -26,11 +26,8 @@ export default function Header(props: HeaderProps) {
         >
           {title}
         </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
         <Button variant="outlined" size="small">
-          Sign up
+          Register / Sign up
         </Button>
       </Toolbar>
     </React.Fragment>
