@@ -4,18 +4,13 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
 interface HeaderProps {
-  sections: ReadonlyArray<{
-    title: string;
-    url: string;
-  }>;
   title: string;
 }
 
 export default function Header(props: HeaderProps) {
-  const { sections, title } = props;
+  const { title } = props;
 
   return (
     <React.Fragment>
@@ -37,24 +32,6 @@ export default function Header(props: HeaderProps) {
         <Button variant="outlined" size="small">
           Sign up
         </Button>
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: "center", overflowX: "auto" }}
-      >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))}
       </Toolbar>
     </React.Fragment>
   );
