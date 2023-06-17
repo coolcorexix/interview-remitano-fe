@@ -1,29 +1,28 @@
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
+import { Header, Footer } from "../components";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
+import { CssBaseline } from "@mui/material";
+import { BRAND_NAME } from "src/constants";
+
+const headerSections = [
+  { title: "Youtube", url: "https://youtube.com/" },
+  { title: "Remitano", url: "https://remitano.com/" },
+];
 
 export default function Home() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Material UI Create React App example in TypeScript
-        </Typography>
-        <Copyright />
-      </Box>
-    </Container>
+    <>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Header sections={headerSections} title={BRAND_NAME} />
+        <Box sx={{ my: 4 }}>
+          <Footer
+            description={"Fullstack Developer - Youtube Video Sharing App"}
+            title={"Pham Huy Phat"}
+          />
+        </Box>
+      </Container>
+    </>
   );
 }
