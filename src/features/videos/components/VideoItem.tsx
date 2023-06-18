@@ -25,9 +25,7 @@ export default function VideoItem({ data }: VideoListItemProps) {
   const { video, shared_at, shared_by } = data;
   const { statistics, snippet, id } = video;
   const [ready, setReady] = useState(false);
-  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
+  const onPlayerReady: YouTubeProps["onReady"] = () => {
     setReady(true);
   };
 
