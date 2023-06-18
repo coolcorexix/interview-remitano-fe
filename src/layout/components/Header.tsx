@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "src/features/auth/AuthProvider";
 import { MailInboxContainer } from "src/features/notifications/components/MailInboxContainer.tsx";
-import ShareVideoContainer from "../../features/share-video/components/ShareVideoContainer.tsx";
+import ShareVideoContainer from "src/features/share-video/components/ShareVideoContainer.tsx";
 
 interface HeaderProps {
   title: string;
@@ -19,17 +19,17 @@ export default function Header(props: HeaderProps) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <MailInboxContainer />
         <Typography
+          sx={{ mr: "auto" }}
           component="h2"
           variant="h5"
           color="inherit"
           align="center"
           noWrap
-          sx={{ flex: 1 }}
         >
           {title}
         </Typography>
+        <MailInboxContainer />
         {jwt ? (
           <>
             <ShareVideoContainer />

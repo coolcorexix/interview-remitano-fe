@@ -1,7 +1,7 @@
 import { useNotificationContext } from "../context/NotificationStackProvider.tsx";
 import React, { useEffect, useState } from "react";
 import { Badge, Fade, IconButton, Menu, MenuItem } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
+import MailIcon from "@mui/icons-material/Notifications";
 
 function notificationsLabel(count: number) {
   if (count === 0) {
@@ -19,7 +19,9 @@ export const MailInboxContainer: React.FC = () => {
   const [unReadCount, setUnReadCount] = useState<number>(messages.length);
 
   useEffect(() => {
-    setUnReadCount((prevState) => prevState + 1);
+    if (messages.length > 0) {
+      setUnReadCount((prevState) => prevState + 1);
+    }
   }, [messages.length]);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,6 +41,7 @@ export const MailInboxContainer: React.FC = () => {
   return (
     <>
       <IconButton
+        sx={{ mr: 2 }}
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
@@ -60,7 +63,11 @@ export const MailInboxContainer: React.FC = () => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        {messages.map(renderItem)}
+        {messages && messages.length > 0 ? (
+          messages.map(renderItem)
+        ) : (
+          <MenuItem onClick={handleClose}>No notifications</MenuItem>
+        )}
       </Menu>
     </>
   );

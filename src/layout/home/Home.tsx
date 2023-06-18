@@ -5,7 +5,7 @@ import { Header, Footer } from "../components";
 import { CssBaseline } from "@mui/material";
 import { BRAND_NAME } from "src/constants";
 import { SharedVideoProvider } from "src/features/videos";
-import SharedVideoListContainer from "../../features/videos/components/SharedVideoContainer.tsx";
+import SharedVideoListContainer from "src/features/videos/components/SharedVideoContainer.tsx";
 import { useEffect } from "react";
 
 export default function Home() {

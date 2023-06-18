@@ -10,7 +10,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { isYouTubeUrl } from "../../../utils";
+import { isYouTubeUrl } from "src/utils";
 
 interface YouTubeMetadataFetcherDialogProps {
   open: boolean;

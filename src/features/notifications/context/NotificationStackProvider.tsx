@@ -38,6 +38,10 @@ function NotificationStackProvider({
   const { message } = useWebSocket();
 
   useEffect(() => {
+    if (!message || message.length == 0) {
+      console.log("receive empty message:", message);
+      return;
+    }
     setMessages((prevMessages) => [...prevMessages, message]);
     enqueueSnackbar(message);
   }, [message]);
