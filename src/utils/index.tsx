@@ -22,13 +22,11 @@ function formatTimeAgo(timestamp: number): string {
 }
 
 function getRandomColor(): string {
-  const r = Math.floor(Math.random() * 256); // Random value between 0 and 255 for red component
-  const g = Math.floor(Math.random() * 256); // Random value between 0 and 255 for green component
-  const b = Math.floor(Math.random() * 256); // Random value between 0 and 255 for blue component
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
 
-  const color = `rgb(${r}, ${g}, ${b})`; // Combine the RGB components into an "rgb(r, g, b)" string
-
-  return color;
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 function getLinkYoutube(id: string): string {

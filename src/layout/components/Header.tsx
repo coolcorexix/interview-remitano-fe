@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "src/features/auth/AuthProvider";
+import { MailInboxContainer } from "src/features/notifications/components/MailInboxContainer.tsx";
 
 interface HeaderProps {
   title: string;
@@ -17,7 +18,7 @@ export default function Header(props: HeaderProps) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        
+        <MailInboxContainer />
         <Typography
           component="h2"
           variant="h5"

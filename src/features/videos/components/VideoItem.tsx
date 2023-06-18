@@ -1,19 +1,66 @@
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { formatTimeAgo } from "src/utils";
 
 import { SharedVideoModels } from "../models/SharedVideoModels.tsx";
+import YouTube, { YouTubeProps } from "react-youtube";
+import { useState } from "react";
+import { CardMedia } from "@mui/material";
 
 type VideoListItemProps = {
   data: SharedVideoModels;
 };
 
+const opts: YouTubeProps["opts"] = {
+  height: "200",
+  width: "360",
+  playerVars: {
+    // https://developers.google.com/youtube/player_parameters
+    autoplay: 1,
+  },
+};
 export default function VideoItem({ data }: VideoListItemProps) {
   const { video, shared_at, shared_by } = data;
-  const { statistics, snippet } = video;
+  const { statistics, snippet, id } = video;
+  const [ready, setReady] = useState(false);
+  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+    setReady(true);
+  };
+
+  function renderYoutube() {
+    return (
+      <Box
+        sx={{
+          width: 360,
+          minWidth: 360,
+          height: 200,
+          borderRadius: "16px",
+          position: "relative",
+        }}
+      >
+        <YouTube videoId={id} opts={opts} onReady={onPlayerReady} />;
+        {!ready && (
+          <CardMedia
+            component="img"
+            sx={{
+              width: 360,
+              minWidth: 360,
+              height: 200,
+              borderRadius: "16px",
+              position: "absolute",
+              top: 0,
+              left: 0,
+            }}
+            image={snippet?.thumbnails?.medium?.url}
+          />
+        )}
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -27,16 +74,8 @@ export default function VideoItem({ data }: VideoListItemProps) {
           maxHeight: 200,
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{
-            width: 360,
-            minWidth: 360,
-            height: 200,
-            borderRadius: "16px",
-          }}
-          image={snippet?.thumbnails?.medium?.url}
-        />
+        {renderYoutube()}
+
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
             <Typography component="div" variant="h6">

@@ -7,7 +7,7 @@ import theme from "./layout/themes.tsx";
 import UserSystem from "./layout/user-system/index.tsx";
 import { AuthProvider } from "./features/auth/AuthProvider.tsx";
 import ShareVideo from "./layout/share-video/index.tsx";
-import NotificationStackProvider from "./features/notifications/components/NotificationStackProvider.tsx";
+import { NotificationStackProvider } from "src/features/notifications/context/NotificationStackProvider.tsx";
 
 const router = createBrowserRouter([
   {
