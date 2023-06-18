@@ -21,16 +21,41 @@ function formatTimeAgo(timestamp: number): string {
   return "Just now";
 }
 
-function getRandomColor(): string {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
+function numberToReadableString(views: string): string {
+  const viewsNumber = parseInt(views, 10);
 
-  return `rgb(${r}, ${g}, ${b})`;
+  if (!viewsNumber) {
+    return "0";
+  }
+
+  if (viewsNumber >= 1_000_000_000) {
+    const formattedViews = (viewsNumber / 1_000_000_000).toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      }
+    );
+    return `${formattedViews}B`;
+  }
+
+  if (viewsNumber >= 1_000_000) {
+    const formattedViews = (viewsNumber / 1_000_000).toLocaleString(undefined, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+    return `${formattedViews}M`;
+  }
+
+  if (viewsNumber >= 1_000) {
+    const formattedViews = (viewsNumber / 1_000).toLocaleString(undefined, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+    return `${formattedViews}K`;
+  }
+
+  return views.toLocaleString();
 }
 
-function getLinkYoutube(id: string): string {
-  return `https://www.youtube.com/watch?v=${id}`;
-}
-
-export { formatTimeAgo, getRandomColor, getLinkYoutube };
+export { formatTimeAgo, numberToReadableString };

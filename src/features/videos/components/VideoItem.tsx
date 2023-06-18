@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { formatTimeAgo } from "src/utils";
+import { formatTimeAgo, numberToReadableString } from "src/utils";
 
 import { SharedVideoModels } from "../models/SharedVideoModels.tsx";
 import YouTube, { YouTubeProps } from "react-youtube";
@@ -92,8 +92,9 @@ export default function VideoItem({ data }: VideoListItemProps) {
               {` shared ${formatTimeAgo(shared_at)}`}
             </Typography>
             <Typography variant="body2" color="text.secondary" component="div">
-              {statistics?.viewCount || 0} views - {statistics?.likeCount || 0}{" "}
-              likes - {statistics?.commentCount || 0} comments
+              {numberToReadableString(statistics?.viewCount)} views -{" "}
+              {numberToReadableString(statistics?.likeCount)} likes -{" "}
+              {numberToReadableString(statistics?.commentCount)} comments
             </Typography>
 
             <Typography

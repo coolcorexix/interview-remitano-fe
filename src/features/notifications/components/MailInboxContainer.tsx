@@ -24,7 +24,11 @@ export const MailInboxContainer: React.FC = () => {
   };
 
   function renderItem(message: string) {
-    return <MenuItem onClick={handleClose}>{message}</MenuItem>;
+    return (
+      <MenuItem key={message} onClick={handleClose}>
+        {message}
+      </MenuItem>
+    );
   }
   return (
     <>
