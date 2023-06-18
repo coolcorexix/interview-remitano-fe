@@ -1,6 +1,6 @@
-import { UserModel } from "src/features/users/models/UserModel.tsx";
+import { UserModels } from "src/features/users/models/UserModels.tsx";
 
-interface SnippetModel {
+export interface SnippetModel {
   categoryId: string;
   channelId: string;
   channelTitle: string;
@@ -8,17 +8,17 @@ interface SnippetModel {
   liveBroadcastContent: string;
 }
 
-interface StatisticsModel {
+export interface StatisticsModel {
   commentCount: string;
   favoriteCount: string;
   likeCount: string;
   viewCount: string;
 }
 
-export interface SharedVideoModel {
+export interface SharedVideoModels {
   id: string;
   shared_at: number;
-  shared_by: UserModel;
+  shared_by: UserModels;
   video: {
     etag: string;
     id: string;

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 import VideoAPI from "../VideoAPI.tsx";
 import sharedVideoReducer, { SharedVideoState } from "./sharedVideoReducer.tsx";
 
@@ -33,7 +27,6 @@ const SharedVideoProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const videos = await VideoAPI.getAll({
         pageIndex: lastPageIndex,
-        pageSize: 10,
       });
 
       dispatch({ type: "ADD_SHARED_VIDEOS", payload: videos });
@@ -49,10 +42,6 @@ const SharedVideoProvider: React.FC<{ children: React.ReactNode }> = ({
     dispatch({ type: "ADD_SHARED_VIDEOS", payload: null });
     setLastPageIndex(0);
   };
-
-  useEffect(() => {
-    getSharedVideos();
-  }, []);
 
   return (
     <SharedVideoContext.Provider

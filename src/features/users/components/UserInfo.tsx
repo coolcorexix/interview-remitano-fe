@@ -4,10 +4,10 @@ import Box from "@mui/material/Box";
 
 import { getRandomColor } from "src/utils";
 import { useMemo } from "react";
-import { UserModel } from "../models/UserModel.tsx";
+import { UserModels } from "../models/UserModels.tsx";
 
 type UserInfoProps = {
-  data: UserModel;
+  data: UserModels;
   sx?: SxProps;
 };
 

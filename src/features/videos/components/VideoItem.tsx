@@ -5,10 +5,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { formatTimeAgo } from "src/utils";
 import UserInfo from "src/features/users/components/UserInfo.tsx";
-import { SharedVideoModel } from "../models/SharedVideoModel.tsx";
+import { SharedVideoModels } from "../models/SharedVideoModels.tsx";
 
 type VideoListItemProps = {
-  data: SharedVideoModel;
+  data: SharedVideoModels;
 };
 
 export default function VideoItem({ data }: VideoListItemProps) {
