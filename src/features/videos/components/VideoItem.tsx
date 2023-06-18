@@ -5,14 +5,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { formatTimeAgo } from "src/utils";
 import UserInfo from "src/features/users/components/UserInfo.tsx";
-import { VideoModel } from "../models/VideoModel.tsx";
+import { SharedVideoModel } from "../models/SharedVideoModel.tsx";
 
 type VideoListItemProps = {
-  data: VideoModel;
+  data: SharedVideoModel;
 };
 
 export default function VideoItem({ data }: VideoListItemProps) {
-  const { image, views = 0, title, description, createdAt, publisher } = data;
+  const { video, shared_at, shared_by } = data;
+  const { statistics } = video;
   return (
     <>
       <Box sx={{ mt: 2 }} />
@@ -23,19 +24,21 @@ export default function VideoItem({ data }: VideoListItemProps) {
         <CardMedia
           component="img"
           sx={{ width: 360, height: 200 }}
-          image={image}
+          image={""}
         />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
             <Typography component="div" variant="h6">
-              {title}
+              {""}
             </Typography>
             <Typography variant="body2" color="text.secondary" component="div">
-              {`${views} views - ${formatTimeAgo(createdAt)}`}
+              {`${statistics?.viewCount || 0} views - ${formatTimeAgo(
+                shared_at
+              )}`}
             </Typography>
-            <UserInfo data={publisher} sx={{ mt: 1 }} />
+            <UserInfo data={shared_by} sx={{ mt: 1 }} />
             <Typography sx={{ mt: 1 }} component="div" variant="body2">
-              {description}
+              {""}
             </Typography>
           </CardContent>
         </Box>

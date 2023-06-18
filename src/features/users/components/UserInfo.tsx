@@ -12,8 +12,8 @@ type UserInfoProps = {
 };
 
 export default function UserInfo({ data, sx, ...boxProps }: UserInfoProps) {
-  const { avatar, name } = data || {};
-  const avatarColor = useMemo(() => getRandomColor(), [avatar]);
+  const { display_name } = data || {};
+  const avatarColor = useMemo(() => getRandomColor(), [display_name]);
 
   return (
     <Box
@@ -21,9 +21,9 @@ export default function UserInfo({ data, sx, ...boxProps }: UserInfoProps) {
       {...boxProps}
     >
       <Avatar
-        alt={name}
+        alt={display_name}
         sx={{ width: 18, height: 18, bgcolor: avatarColor }}
-        src={avatar}
+        src={display_name}
       />
       <Divider orientation={"vertical"} light={true} />
       <Typography
@@ -32,7 +32,7 @@ export default function UserInfo({ data, sx, ...boxProps }: UserInfoProps) {
         component="div"
         sx={{ ml: 1 }}
       >
-        {name}
+        {display_name}
       </Typography>
     </Box>
   );

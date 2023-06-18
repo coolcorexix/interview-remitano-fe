@@ -1,5 +1,5 @@
-export type UserModel = {
+export interface UserModel {
   id: string;
-  avatar: string;
-  name: string;
-};
+  email: string;
+  display_name: string;
+}

@@ -1,55 +1,47 @@
 import { useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
-type WebSocketHook = {
+interface WebSocketHook {
   message: string;
-  sendMessage: (event: string) => void;
-};
+  sendMessage: (event: string, data?: any) => void;
+}
 
 const useWebSocket = (path?: string, host?: string): WebSocketHook => {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const [message, setMessage] = useState("");
 
   const defaultHost = import.meta.env.REACT_APP_WS_HOST || "localhost:3000";
-  const url = `ws://${host || defaultHost}${path ? `/${path}` : ""}`;
+  const url = `http://${defaultHost || host}${path ? `/${path}` : ""}`;
 
-  const connectWebSocket = () => {
-    const newSocket = new WebSocket(url);
-
-    newSocket.onopen = () => {
-      console.log("WebSocket connection established.");
-    };
-
-    newSocket.onmessage = (event) => {
-      const receivedMessage = event.data;
-      console.log("Received message:", receivedMessage);
-      setMessage(receivedMessage);
-    };
-
-    newSocket.onclose = () => {
-      console.log("WebSocket connection closed.");
-    };
-
-    setSocket(newSocket);
-  };
-
-  const disconnectWebSocket = () => {
+  const sendMessage = (event: string, data?: any) => {
     if (socket) {
-      socket.close();
-    }
-  };
-
-  const sendMessage = (event: string) => {
-    if (socket) {
-      const jsonMsg = JSON.stringify({ event });
-      socket.send(jsonMsg);
+      socket.emit(event, data);
     }
   };
 
   useEffect(() => {
-    connectWebSocket();
+    const newSocket = io(url);
+
+    newSocket.on("connect", () => {
+      console.log("WebSocket connection established.");
+    });
+
+    newSocket.on("message", (data: any) => {
+      const receivedMessage = data.message;
+      console.log("Received message:", receivedMessage);
+      setMessage(receivedMessage);
+    });
+
+    newSocket.on("disconnect", () => {
+      console.log("WebSocket connection closed.");
+    });
+
+    setSocket(newSocket);
 
     return () => {
-      disconnectWebSocket();
+      if (socket) {
+        socket.disconnect();
+      }
     };
   }, [url]);
 

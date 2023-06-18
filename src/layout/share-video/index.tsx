@@ -1,12 +1,11 @@
-import React from 'react';
-import YouTubeMetadataFetcher from './YoutubeMetadataFetcher';
+import YouTubeMetadataFetcher from "./YoutubeMetadataFetcher";
 
 function ShareVideo() {
-    return (
-        <div>
-            <YouTubeMetadataFetcher />
-        </div>
-    );
+  return (
+    <div>
+      <YouTubeMetadataFetcher />
+    </div>
+  );
 }
 
 export default ShareVideo;
