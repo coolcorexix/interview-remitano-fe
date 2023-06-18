@@ -6,6 +6,7 @@ import { CssBaseline } from "@mui/material";
 import { BRAND_NAME } from "src/constants";
 import { VideoItem } from "src/features/videos";
 import { VideoModel } from "src/features/videos/models/VideoModel.tsx";
+import NotificationStackProvider from "src/features/notifications/components/NotificationStackProvider.tsx";
 
 const video: VideoModel = {
   id: "v123456",
@@ -29,17 +30,21 @@ export default function Home() {
 
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Header title={BRAND_NAME} />
-        {[1, 2, 3].map(renderVideo)}
-        <Box sx={{ my: 4 }}>
-          <Footer
-            description={"Fullstack Developer - Youtube VideoModel Sharing App"}
-            title={"Pham Huy Phat"}
-          />
-        </Box>
-      </Container>
+      <NotificationStackProvider>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <Header title={BRAND_NAME} />
+          {[1, 2, 3].map(renderVideo)}
+          <Box sx={{ my: 4 }}>
+            <Footer
+              description={
+                "Fullstack Developer - Youtube VideoModel Sharing App"
+              }
+              title={"Pham Huy Phat"}
+            />
+          </Box>
+        </Container>
+      </NotificationStackProvider>
     </>
   );
 }
