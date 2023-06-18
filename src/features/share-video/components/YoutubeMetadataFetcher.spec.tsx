@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import fetchMock from "jest-fetch-mock";
-import YouTubeMetadataFetcher from "./YoutubeMetadataFetcher";
+import YouTubeMetadataFetcherDialog from "./YouTubeMetadataFetcherDialog.tsx";
 import { debug } from "jest-preview";
 
 describe("YouTubeMetadataFetcher", () => {
@@ -25,7 +25,7 @@ describe("YouTubeMetadataFetcher", () => {
 
     fetchMock.mockResponseOnce(JSON.stringify(mockResponse));
 
-    render(<YouTubeMetadataFetcher />);
+    render(<YouTubeMetadataFetcherDialog onClose={() => {}} open={true} />);
 
     const input = screen.getByRole("textbox");
     const button = screen.getByRole("button");
@@ -48,12 +48,12 @@ describe("YouTubeMetadataFetcher", () => {
         headers: { "Content-type": "application/json" },
       })
     );
-    const json  = (await jsonPromise).json();
+    const json = (await jsonPromise).json();
 
     fetchMock.mockReturnValueOnce(jsonPromise);
-    
+
     await waitFor(() => {
-        expect(json).resolves.toEqual(mockResponse);
+      expect(json).resolves.toEqual(mockResponse);
     });
 
     debug();

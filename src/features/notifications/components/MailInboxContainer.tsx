@@ -1,5 +1,5 @@
 import { useNotificationContext } from "../context/NotificationStackProvider.tsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge, Fade, IconButton, Menu, MenuItem } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 
@@ -16,11 +16,17 @@ export const MailInboxContainer: React.FC = () => {
   const { messages } = useNotificationContext();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [unReadCount, setUnReadCount] = useState<number>(messages.length);
+
+  useEffect(() => {
+    setUnReadCount((prevState) => prevState + 1);
+  }, [messages.length]);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setUnReadCount(0);
   };
 
   function renderItem(message: string) {
@@ -38,12 +44,9 @@ export const MailInboxContainer: React.FC = () => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        aria-label={notificationsLabel(100)}
+        aria-label={notificationsLabel(unReadCount)}
       >
-        <Badge
-          badgeContent={(messages && messages.length) || 0}
-          color="secondary"
-        >
+        <Badge badgeContent={unReadCount} color="secondary">
           <MailIcon />
         </Badge>
       </IconButton>

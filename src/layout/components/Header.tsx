@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "src/features/auth/AuthProvider";
 import { MailInboxContainer } from "src/features/notifications/components/MailInboxContainer.tsx";
+import ShareVideoContainer from "../../features/share-video/components/ShareVideoContainer.tsx";
 
 interface HeaderProps {
   title: string;
@@ -31,16 +32,9 @@ export default function Header(props: HeaderProps) {
         </Typography>
         {jwt ? (
           <>
+            <ShareVideoContainer />
             <Button
-              onClick={() => {
-                navigate("/share-video");
-              }}
-              variant="outlined"
-              size="small"
-            >
-              Share video
-            </Button>
-            <Button
+              sx={{ ml: 2 }}
               onClick={() => {
                 signout();
                 navigate("/");
@@ -56,7 +50,7 @@ export default function Header(props: HeaderProps) {
             onClick={() => {
               navigate("/user-system");
             }}
-            variant="outlined"
+            variant={"contained"}
             size="small"
           >
             Register / Sign up

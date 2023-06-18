@@ -73,4 +73,10 @@ export function getRandomColor() {
   return color;
 }
 
-export { formatTimeAgo, numberToReadableString };
+function isYouTubeUrl(input: string): boolean {
+  const youtubeUrlRegex =
+    /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+/;
+  return youtubeUrlRegex.test(input);
+}
+
+export { formatTimeAgo, numberToReadableString, isYouTubeUrl };

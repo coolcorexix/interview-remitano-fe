@@ -39,7 +39,10 @@ function UserSystem() {
   }) => {
     try {
       const rs = await register({ email, password });
-      console.log("🚀 ~ file: index.tsx:16 ~ UserSystem ~ rs:", rs);
+      console.log(
+        "🚀 ~ file: ShareVideoContainer.tsx:16 ~ UserSystem ~ rs:",
+        rs
+      );
       if (!rs.data) {
         return;
       }
