@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import requestToServer, { getAuthHeaders } from 'src/services/requestToServer';
 
 const YouTubeMetadataFetcher: React.FC = () => {
   const [url, setUrl] = useState('');
@@ -6,9 +7,13 @@ const YouTubeMetadataFetcher: React.FC = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value);
+    // if event target value is a url then trigger handleShareClick
+    if (event.target.value.includes('youtube.com') || event.target.value.includes('youtu.be')) {
+      fetchMetadata();
+    }
   };
 
-  const handleShareClick = () => {
+  const fetchMetadata = () => {
     const videoId = extractVideoId(url);
 
     // Fetch metadata using the YouTube Data API
@@ -18,7 +23,10 @@ const YouTubeMetadataFetcher: React.FC = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("🚀 ~ file: YoutubeMetadataFetcher.tsx:20 ~ .then ~ data:", data)
-        const metadata = data.items[0].snippet;
+        const metadata = {
+          id: data.items[0].id,
+          ...data.items[0].snippet
+        };
         console.log("🚀 ~ file: YoutubeMetadataFetcher.tsx:22 ~ .then ~ metadata:", metadata)
         setMetadata(metadata);
       })
@@ -36,10 +44,13 @@ const YouTubeMetadataFetcher: React.FC = () => {
   return (
     <div>
       <input type="text" value={url} onChange={handleInputChange} />
-      <button onClick={handleShareClick}>Share</button>
-      {
-        JSON.stringify(metadata)
-      }
+      <button onClick={() => {
+        requestToServer.post('/videos/share/create', {
+          video_id: metadata.id,
+        }, {
+          headers: getAuthHeaders()
+        })
+      }}>Share</button>
       {metadata && (
         <div>
           <h3>{metadata.title}</h3>
