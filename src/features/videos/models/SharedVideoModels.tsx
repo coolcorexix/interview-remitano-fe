@@ -9,7 +9,7 @@ export interface SnippetModel {
   title: string;
   tags: string[];
   publishedAt: string;
-  thumbnails: object[];
+  thumbnails: any;
 }
 
 export interface StatisticsModel {

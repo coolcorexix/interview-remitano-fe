@@ -2,10 +2,11 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import YouTube, { YouTubeProps } from "react-youtube";
 import { formatTimeAgo, numberToReadableString } from "src/utils";
 
 import { SharedVideoModels } from "../models/SharedVideoModels.tsx";
-import YouTube, { YouTubeProps } from "react-youtube";
+
 import { useState } from "react";
 import { CardMedia } from "@mui/material";
 
