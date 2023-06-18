@@ -6,22 +6,64 @@ const LoginForm = ({
   handleLogin,
 }: {
   handleRegister: ({
-    username,
+    email,
     password,
   }: {
-    username: string;
+    email: string;
     password: string;
   }) => void;
   handleLogin: ({
-    username,
+    email,
     password,
   }: {
-    username: string;
+    email: string;
     password: string;
   }) => void;
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError('Email is required');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Invalid email address');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const submitLogin = () => {
+    validateEmail();
+    validatePassword();
+
+    // Perform login logic if the form is valid
+    if (!emailError && !passwordError) {
+      handleLogin({ email, password });
+    }
+  };
+
+  const submitRegister = () => {
+    validateEmail();
+    validatePassword();
+
+    // Perform registration logic if the form is valid
+    if (!emailError && !passwordError) {
+      handleRegister({ email, password });
+    }
+  };
 
   return (
     <form>
@@ -29,10 +71,13 @@ const LoginForm = ({
         label="Email"
         variant="outlined"
         type="email"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        onBlur={validateEmail}
         fullWidth
         margin="normal"
+        error={!!emailError}
+        helperText={emailError}
       />
 
       <TextField
@@ -41,33 +86,21 @@ const LoginForm = ({
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        onBlur={validatePassword}
         fullWidth
         margin="normal"
+        error={!!passwordError}
+        helperText={passwordError}
       />
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          handleLogin({ username: username, password });
-        }}
-        fullWidth
-      >
+      <Button variant="contained" color="primary" onClick={submitLogin} fullWidth>
         Login
       </Button>
 
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => {
-          handleRegister({ username: username, password });
-        }}
-        fullWidth
-      >
+      <Button variant="outlined" color="primary" onClick={submitRegister} fullWidth>
         Register
       </Button>
-    </form>
-  );
+    </form>)
 };
 
 export default LoginForm;

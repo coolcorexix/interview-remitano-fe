@@ -5,9 +5,12 @@ import {
   redirect,
   RouterProvider,
 } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
 import Home from "src/layout/home/Home.tsx";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./layout/themes.tsx";
+import UserSystem from "./layout/user-system/index.tsx";
+import { AuthProvider } from "./features/auth/AuthProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,17 +18,19 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/user-system',
-    element: <div>
-      <h1>User System</h1>
-    </div>
-  }
+    path: "/user-system",
+    element: <UserSystem />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

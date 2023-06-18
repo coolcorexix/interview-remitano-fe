@@ -1,9 +1,9 @@
 import * as React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
+import { useAuth } from "src/features/auth/AuthProvider";
 
 interface HeaderProps {
   title: string;
@@ -11,6 +11,8 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   const { title } = props;
+  const { jwt, signout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <React.Fragment>
@@ -26,9 +28,39 @@ export default function Header(props: HeaderProps) {
         >
           {title}
         </Typography>
-        <Button variant="outlined" size="small">
-          Register / Sign up
-        </Button>
+        {jwt ? (
+          <>
+            <Button
+              onClick={() => {
+                navigate("/user-system");
+              }}
+              variant="outlined"
+              size="small"
+            >
+              Share video
+            </Button>
+            <Button
+              onClick={() => {
+                signout();
+                navigate("/");
+              }}
+              variant="outlined"
+              size="small"
+            >
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <Button
+            onClick={() => {
+              navigate("/user-system");
+            }}
+            variant="outlined"
+            size="small"
+          >
+            Register / Sign up
+          </Button>
+        )}
       </Toolbar>
     </React.Fragment>
   );
