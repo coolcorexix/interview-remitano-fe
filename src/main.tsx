@@ -11,8 +11,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./layout/themes.tsx";
 import UserSystem from "./layout/user-system/index.tsx";
 import { AuthProvider } from "./features/auth/AuthProvider.tsx";
+import ShareVideo from "./layout/share-video/index.tsx";
 
 const router = createBrowserRouter([
+  {
+    path: "/share-video",
+    element: <ShareVideo />,
+  },
   {
     path: "/",
     element: <Home />,
