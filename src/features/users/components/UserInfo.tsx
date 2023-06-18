@@ -8,10 +8,16 @@ import { UserModels } from "../models/UserModels.tsx";
 
 type UserInfoProps = {
   data: UserModels;
+  hideAvatar: boolean;
   sx?: SxProps;
 };
 
-export default function UserInfo({ data, sx, ...boxProps }: UserInfoProps) {
+export default function UserInfo({
+  data,
+  sx,
+  hideAvatar,
+  ...boxProps
+}: UserInfoProps) {
   const { display_name } = data || {};
   const avatarColor = useMemo(() => getRandomColor(), [display_name]);
 
@@ -20,11 +26,13 @@ export default function UserInfo({ data, sx, ...boxProps }: UserInfoProps) {
       sx={{ display: "flex", alignItems: "flex-start", ...sx }}
       {...boxProps}
     >
-      <Avatar
-        alt={display_name}
-        sx={{ width: 18, height: 18, bgcolor: avatarColor }}
-        src={display_name}
-      />
+      {!hideAvatar && (
+        <Avatar
+          alt={display_name}
+          sx={{ width: 18, height: 18, bgcolor: avatarColor }}
+          src={display_name}
+        />
+      )}
       <Divider orientation={"vertical"} light={true} />
       <Typography
         variant="body2"

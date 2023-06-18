@@ -1,17 +1,18 @@
 function formatTimeAgo(timestamp: number): string {
-  const currentTimestamp = Math.floor(Date.now() / 1000);
-  const timeDifference = currentTimestamp - timestamp;
+  const currentTimestamp = new Date();
+  const timeDifference =
+    currentTimestamp.getTime() - new Date(timestamp).getTime();
 
   const timeUnits = [
-    { unit: "year", seconds: 31536000 },
-    { unit: "month", seconds: 2592000 },
-    { unit: "day", seconds: 86400 },
-    { unit: "hour", seconds: 3600 },
-    { unit: "minute", seconds: 60 },
+    { unit: "year", milliseconds: 31536000000 },
+    { unit: "month", milliseconds: 2592000000 },
+    { unit: "day", milliseconds: 86400000 },
+    { unit: "hour", milliseconds: 3600000 },
+    { unit: "minute", milliseconds: 60000 },
   ];
 
   for (const unit of timeUnits) {
-    const timeValue = Math.floor(timeDifference / unit.seconds);
+    const timeValue = Math.floor(timeDifference / unit.milliseconds);
     if (timeValue >= 1) {
       return `${timeValue} ${unit.unit}${timeValue > 1 ? "s" : ""} ago`;
     }
@@ -30,4 +31,8 @@ function getRandomColor(): string {
   return color;
 }
 
-export { formatTimeAgo, getRandomColor };
+function getLinkYoutube(id: string): string {
+  return `https://www.youtube.com/watch?v=${id}`;
+}
+
+export { formatTimeAgo, getRandomColor, getLinkYoutube };

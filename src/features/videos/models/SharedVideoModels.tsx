@@ -6,6 +6,10 @@ export interface SnippetModel {
   channelTitle: string;
   description: string;
   liveBroadcastContent: string;
+  title: string;
+  tags: string[];
+  publishedAt: string;
+  thumbnails: object[];
 }
 
 export interface StatisticsModel {
