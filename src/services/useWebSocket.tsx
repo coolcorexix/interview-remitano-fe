@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { useSharedVideo } from "src/features/videos";
 
 interface WebSocketHook {
   message: string;
@@ -7,6 +8,7 @@ interface WebSocketHook {
 }
 
 const useWebSocket = (path?: string, host?: string): WebSocketHook => {
+  const { clearSharedVideos } = useSharedVideo()
   const [socket, setSocket] = useState<Socket | null>(null);
   const [message, setMessage] = useState("");
 
@@ -30,6 +32,11 @@ const useWebSocket = (path?: string, host?: string): WebSocketHook => {
       const receivedMessage = data.message;
       console.log("Received message:", receivedMessage);
       setMessage(receivedMessage);
+    });
+
+    newSocket.on('video_shared', (data: any) => {
+      setMessage(`New video shared from ${data.sharedBy}!`);
+      clearSharedVideos();
     });
 
     newSocket.on("disconnect", () => {

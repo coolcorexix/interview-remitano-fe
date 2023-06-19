@@ -19,7 +19,7 @@ const opts: YouTubeProps["opts"] = {
   width: "360",
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
-    autoplay: 0,
+    autoplay: 1,
   },
 };
 export default function VideoItem({ data }: VideoListItemProps) {
@@ -41,9 +41,14 @@ export default function VideoItem({ data }: VideoListItemProps) {
           position: "relative",
         }}
       >
-        <YouTube videoId={id} opts={opts} onReady={onPlayerReady} />;
+        {
+          ready && <YouTube videoId={id} opts={opts} onReady={onPlayerReady} />
+        }
         {!ready && (
           <CardMedia
+            onClick={() => {
+              setReady(true);
+            }}
             component="img"
             sx={{
               width: 360,

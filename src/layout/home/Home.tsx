@@ -4,7 +4,7 @@ import { Header, Footer } from "../components";
 
 import { CssBaseline } from "@mui/material";
 import { BRAND_NAME } from "src/constants";
-import { SharedVideoProvider } from "src/features/videos";
+
 import SharedVideoListContainer from "src/features/videos/components/SharedVideoContainer.tsx";
 import { useEffect } from "react";
 
@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <>
-      <SharedVideoProvider>
+      
         <CssBaseline />
         <Container maxWidth="lg">
           <Header title={BRAND_NAME} />
@@ -27,7 +27,7 @@ export default function Home() {
             />
           </Box>
         </Container>
-      </SharedVideoProvider>
+
     </>
   );
 }

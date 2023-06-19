@@ -104,9 +104,7 @@ const YouTubeMetadataFetcherDialog: React.FC<
               "/videos/share/create",
               { video_id: metadata.id },
               { headers: getAuthHeaders() }
-            ).then(() => {
-              clearSharedVideos();
-            });
+            );
             handleClose();
           }}
         >
