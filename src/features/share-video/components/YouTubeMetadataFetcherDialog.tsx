@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { isYouTubeUrl } from "src/utils";
+import { useSharedVideo } from "src/features/videos";
 
 interface YouTubeMetadataFetcherDialogProps {
   open: boolean;
@@ -23,19 +24,20 @@ const YouTubeMetadataFetcherDialog: React.FC<
   const [url, setUrl] = useState("");
   const [urlError, setUrlError] = useState<boolean>(false);
   const [metadata, setMetadata] = useState<any>(null);
+  const { clearSharedVideos } = useSharedVideo();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const url = event.target.value.trim();
-    setUrl(url);
-    setUrlError(!isYouTubeUrl(url));
+    const trimmedUrl = event.target.value.trim();
+    setUrl(trimmedUrl);
+    setUrlError(!isYouTubeUrl(trimmedUrl));
     // if event target value is a url then trigger handleShareClick
-    if (url.includes("youtube.com") || url.includes("youtube")) {
-      fetchMetadata();
+    if (trimmedUrl.includes("youtube.com") || trimmedUrl.includes("youtube")) {
+      fetchMetadata(trimmedUrl);
     }
   };
 
-  const fetchMetadata = () => {
-    const videoId = extractVideoId(url);
+  const fetchMetadata = (inputUrl: string) => {
+    const videoId = extractVideoId(inputUrl);
 
     // Fetch metadata using the YouTube Data API
     fetch(
@@ -61,15 +63,13 @@ const YouTubeMetadataFetcherDialog: React.FC<
   };
 
   const extractVideoId = (url: string): string => {
-    // Extract video ID from the YouTube URL
-    const match = url.match(
-      /(?:\?v=|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|youtu\.be\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|youtube.com\/user\/\S+|youtube.com\/v\/\S+|youtube.com\/watch\?v=\S+|youtube.com\/embed\/\S+)/
-    );
-    return match && match[0]
-      ? match[0].split(
-          /(?:\?v=|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|youtu\.be\/|\/embed\/|\.be\/|\/v\/|\/\d{2}\/|youtube.com\/user\/|youtube.com\/v\/|youtube.com\/watch\?v=|youtube.com\/embed\/)/
-        )[1]
-      : "";
+    
+    // get video url from query v parameter
+    const videoUrl = new URL(url);
+    const videoId = videoUrl.searchParams.get("v");
+    
+    return videoId || '';
+
   };
 
   function handleClose() {
@@ -104,7 +104,9 @@ const YouTubeMetadataFetcherDialog: React.FC<
               "/videos/share/create",
               { video_id: metadata.id },
               { headers: getAuthHeaders() }
-            );
+            ).then(() => {
+              clearSharedVideos();
+            });
             handleClose();
           }}
         >

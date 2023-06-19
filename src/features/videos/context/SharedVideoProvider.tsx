@@ -39,7 +39,7 @@ const SharedVideoProvider: React.FC<{ children: React.ReactNode }> = ({
   const clearSharedVideos = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    dispatch({ type: "ADD_SHARED_VIDEOS", payload: null });
+    dispatch({ type: "CLEAR_SHARED_VIDEOS", payload: null });
     setLastPageIndex(0);
   };
 

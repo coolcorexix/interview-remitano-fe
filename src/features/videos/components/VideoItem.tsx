@@ -19,7 +19,7 @@ const opts: YouTubeProps["opts"] = {
   width: "360",
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
-    autoplay: 1,
+    autoplay: 0,
   },
 };
 export default function VideoItem({ data }: VideoListItemProps) {
